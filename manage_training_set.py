@@ -13,7 +13,7 @@ def manageTrainingSet():
         os.mkdir(TRAINING_SET_DIR)
         print(' Created Training Set folder')
 
-    name = input('\n Type the name of the person to be used for training the classifier (0 to skip): ')
+    name = input('\n Type the name of the person that you want to add to the training set of the classifier (0 to skip): ')
     while name != '0':
         user_path = TRAINING_SET_DIR + '/' + name
         if os.path.isdir(user_path):
@@ -31,4 +31,4 @@ def manageTrainingSet():
         if take_photos:
             print(' Take 100 photos')
 
-        name = input('\n Type the name of the person to be used for training the classifier (0 to finish): ')
+        name = input('\n Type the name of the person that you want to add to the training set of the classifier (0 to finish): ')
