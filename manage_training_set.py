@@ -1,5 +1,4 @@
 import os, cv2
-from cv2 import VideoCapture
 
 TRAINING_SET_DIR = './Training Set'
 
@@ -18,7 +17,7 @@ def manageTrainingSet():
                 print(' There are already', len(list), 'people in the training set')
                 print(' Users in the training set:', list[0], end='')
                 for user in list[1:]:
-                    print(',', user)
+                    print(',', user, end='')
         else:
             print(' There is no users in the training set')
     else:
@@ -26,7 +25,7 @@ def manageTrainingSet():
         os.mkdir(TRAINING_SET_DIR)
         print(' Created Training Set folder')
 
-    name = input('\n Type the name of the person that you want to add to the training set of the classifier (0 to skip): ')
+    name = input('\n\n Type the name of the person that you want to add to the training set of the classifier (0 to skip): ')
     while name != '0':
         user_path = TRAINING_SET_DIR + '/' + name
         if os.path.isdir(user_path):
@@ -42,6 +41,17 @@ def manageTrainingSet():
             take_photos = True
 
         if take_photos:
-            print(' Take 100 photos')
+            camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+            if not camera.isOpened():
+                print(' \nError: Could not open the camera')
+                exit()
+            count = 0
+            while count < 10:
+                return_value, frame = camera.read()
+                cv2.imshow('Window',frame)
+                cv2.waitKey(250)
+                cv2.destroyAllWindows()
+                count += 1
+            camera.release()
 
         name = input('\n Type the name of the person that you want to add to the training set of the classifier (0 to finish): ')
