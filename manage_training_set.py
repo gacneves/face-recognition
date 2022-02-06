@@ -1,4 +1,5 @@
-import os, cv2
+import os
+import cv2
 
 TRAINING_SET_DIR = './Training Set'
 
@@ -42,19 +43,18 @@ def manageTrainingSet():
 
         if take_photos:
             camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-            cv2.waitKey(10000)
+            cv2.waitKey(500)
             if not camera.isOpened():
                 print(' \nError: Could not open the camera')
                 exit()
             count = 0
-            while count < 10:
+            while count < 30:
                 return_value, frame = camera.read()
                 cv2.imwrite('%s/%s.bmp' % (user_path, count), frame)
                 cv2.imshow('Taking photos...', frame)
                 cv2.waitKey(250)
                 count += 1
             camera.release()
-            cv2.waitKey(0)
             cv2.destroyAllWindows()
 
         name = input('\n Type the name of the person that you want to add to the training set of the classifier (0 to finish): ')
