@@ -28,12 +28,20 @@ def checkTrainingSetDir():
         print(' Created Training Set folder')
 
 def takeUserPhotos(user_path):
+    print('\n Checking camera existence...')
     camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-    cv2.waitKey(500)
     if not camera.isOpened():
-        print(' \nError: Could not open the camera')
+        print('\n Error: Could not open the camera')
         exit()
-    count = 0
+    print(' Successfully opened the camera')
+
+    print('\n A ammount of 100 photos will be taken in x seconds. Stay steady')
+    count = 5
+    while count != 0:
+        print(' Prepare to take photos in %d...' % count)
+        cv2.waitKey(1000)
+        count -= 1
+
     while count < 30:
         # Take camera frame
         _, frame = camera.read()
