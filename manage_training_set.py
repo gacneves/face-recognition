@@ -2,7 +2,7 @@ import os
 import cv2
 
 TRAINING_SET_DIR = './Training Set'
-CASCADE_CLASSIFIER_DIR = './Cascade Classifier'
+CASCADE_CLASSIFIER_DIR = './Haar Cascade Classifier'
 WIDTH = 300
 HEIGHT = 300
 
@@ -56,6 +56,11 @@ def takeUserPhotos(user_path):
         # Convert RGB color channels to gray
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
+        # Detect face in the frame
+        faces = face_cascade.detectMultiScale(gray_frame)
+        for face in faces:
+            x, y, w, h = face
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (255,0,0), 2)
         cv2.imwrite('%s/%s.bmp' % (user_path, count), gray_frame)
         cv2.imshow('Taking photos...', frame)
         cv2.waitKey(250)
