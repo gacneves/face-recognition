@@ -1,4 +1,5 @@
 import os, cv2
+from cv2 import VideoCapture
 
 TRAINING_SET_DIR = './Training Set'
 
@@ -9,14 +10,17 @@ def manageTrainingSet():
     if os.path.isdir(TRAINING_SET_DIR):
         print(' Found Training Set folder')
         list = os.listdir(TRAINING_SET_DIR)
-        if len(list) == 1:
-            print(' There is already 1 person in the training set')
-            print(' User in the training set:', list[0])
+        if list:
+            if len(list) == 1:
+                print(' There is already 1 person in the training set')
+                print(' User in the training set:', list[0])
+            else:
+                print(' There are already', len(list), 'people in the training set')
+                print(' Users in the training set:', list[0], end='')
+                for user in list[1:]:
+                    print(',', user)
         else:
-            print(' There are already', len(list), 'people in the training set')
-            print(' Users in the training set:', list[0], end='')
-            for user in list[1:]:
-                print(',', user)
+            print(' There is no users in the training set')
     else:
         print(' Folder not found. Making directory...')
         os.mkdir(TRAINING_SET_DIR)
