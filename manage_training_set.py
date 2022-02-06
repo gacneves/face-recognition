@@ -28,6 +28,7 @@ def checkTrainingSetDir():
         print(' Created Training Set folder')
 
 def takeUserPhotos(user_path):
+    # Try opening camera
     print('\n Checking camera existence...')
     camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
     if not camera.isOpened():
@@ -35,6 +36,11 @@ def takeUserPhotos(user_path):
         exit()
     print(' Successfully opened the camera')
 
+    # Prepare pretrained classifier
+    cascade_face_file = os.path.join(CASCADE_CLASSIFIER_DIR, 'haarcascade_frontalface_default.xml')
+    face_cascade = cv2.CascadeClassifier(cascade_face_file)
+
+    # Count before the photos caption
     print('\n A ammount of 100 photos will be taken in x seconds. Stay steady')
     count = 5
     while count != 0:
@@ -42,6 +48,7 @@ def takeUserPhotos(user_path):
         cv2.waitKey(1000)
         count -= 1
 
+    # Photo caption
     while count < 30:
         # Take camera frame
         _, frame = camera.read()
@@ -53,6 +60,7 @@ def takeUserPhotos(user_path):
         cv2.imshow('Taking photos...', frame)
         cv2.waitKey(250)
         count += 1
+
     camera.release()
     cv2.destroyAllWindows()
 
