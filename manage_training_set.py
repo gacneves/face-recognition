@@ -2,6 +2,9 @@ import os
 import cv2
 
 TRAINING_SET_DIR = './Training Set'
+CASCADE_CLASSIFIER_DIR = './Cascade Classifier'
+WIDTH = 300
+HEIGHT = 300
 
 def checkTrainingSetDir():
     print('\n Checking Training Set folder existence...')
@@ -24,6 +27,27 @@ def checkTrainingSetDir():
         os.mkdir(TRAINING_SET_DIR)
         print(' Created Training Set folder')
 
+def takeUserPhotos(user_path):
+    camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    cv2.waitKey(500)
+    if not camera.isOpened():
+        print(' \nError: Could not open the camera')
+        exit()
+    count = 0
+    while count < 30:
+        # Take camera frame
+        _, frame = camera.read()
+
+        # Convert RGB color channels to gray
+        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        cv2.imwrite('%s/%s.bmp' % (user_path, count), gray_frame)
+        cv2.imshow('Taking photos...', frame)
+        cv2.waitKey(250)
+        count += 1
+    camera.release()
+    cv2.destroyAllWindows()
+
 def manageTrainingSet():
     print('\n ### Managing the training set ### ')
 
@@ -34,35 +58,15 @@ def manageTrainingSet():
         user_path = os.path.join(TRAINING_SET_DIR, name)
         if os.path.isdir(user_path):
             print('\n Person already in the training set')
-            decision = input(' Do you want to retake frames (y/n): ')
+            decision = input(' Do you want to retake the photos (y/n): ')
             while decision != 'y' and decision != 'n':  
-                decision = input(' Type a valid option. Do you want to retake frames (y/n): ')
-            take_photos = True if decision == 'y' else False if decision == 'n' else 0
+                decision = input(' Type a valid option. Do you want to retake the photos (y/n): ')
+            if decision == 'y':
+                takeUserPhotos(user_path)
         else:
             print('\n User does not exist in the database. Making directory...')
             os.mkdir(user_path)
             print(' Created ', name, ' folder in the training set\n')
-            take_photos = True
-
-        if take_photos:
-            camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-            cv2.waitKey(500)
-            if not camera.isOpened():
-                print(' \nError: Could not open the camera')
-                exit()
-            count = 0
-            while count < 30:
-                # Take camera frame
-                _, frame = camera.read()
-
-                # Convert RGB color channels to gray
-                gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-                cv2.imwrite('%s/%s.bmp' % (user_path, count), gray_frame)
-                cv2.imshow('Taking photos...', frame)
-                cv2.waitKey(250)
-                count += 1
-            camera.release()
-            cv2.destroyAllWindows()
-
+            takeUserPhotos(user_path)
+            
         name = input('\n Type the name of the person that you want to add to the training set of the classifier (0 to finish): ')
