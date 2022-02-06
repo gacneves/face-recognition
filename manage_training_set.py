@@ -13,7 +13,7 @@ def manageTrainingSet():
         if list:
             if len(list) == 1:
                 print(' There is already 1 person in the training set')
-                print(' User in the training set:', list[0])
+                print(' User in the training set:', list[0], end='')
             else:
                 print(' There are already', len(list), 'people in the training set')
                 print(' Users in the training set:', list[0], end='')
@@ -28,7 +28,6 @@ def manageTrainingSet():
 
     name = input('\n\n Type the name of the person that you want to add to the training set of the classifier (0 to skip): ')
     while name != '0':
-        os.path.join()
         user_path = os.path.join(TRAINING_SET_DIR, name)
         if os.path.isdir(user_path):
             print('\n Person already in the training set')
@@ -50,8 +49,13 @@ def manageTrainingSet():
                 exit()
             count = 0
             while count < 30:
-                return_value, frame = camera.read()
-                cv2.imwrite('%s/%s.bmp' % (user_path, count), frame)
+                # Take camera frame
+                _, frame = camera.read()
+
+                # Convert RGB color channels to gray
+                gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+                cv2.imwrite('%s/%s.bmp' % (user_path, count), gray_frame)
                 cv2.imshow('Taking photos...', frame)
                 cv2.waitKey(250)
                 count += 1
