@@ -3,9 +3,7 @@ import cv2
 
 TRAINING_SET_DIR = './Training Set'
 
-def manageTrainingSet():
-    print('\n ### Managing the training set ### ')
-
+def checkTrainingSetDir():
     print('\n Checking Training Set folder existence...')
     if os.path.isdir(TRAINING_SET_DIR):
         print(' Found Training Set folder')
@@ -25,6 +23,11 @@ def manageTrainingSet():
         print(' Folder not found. Making directory...')
         os.mkdir(TRAINING_SET_DIR)
         print(' Created Training Set folder')
+
+def manageTrainingSet():
+    print('\n ### Managing the training set ### ')
+
+    checkTrainingSetDir()
 
     name = input('\n\n Type the name of the person that you want to add to the training set of the classifier (0 to skip): ')
     while name != '0':
