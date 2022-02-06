@@ -28,7 +28,8 @@ def manageTrainingSet():
 
     name = input('\n\n Type the name of the person that you want to add to the training set of the classifier (0 to skip): ')
     while name != '0':
-        user_path = TRAINING_SET_DIR + '/' + name
+        os.path.join()
+        user_path = os.path.join(TRAINING_SET_DIR, name)
         if os.path.isdir(user_path):
             print('\n Person already in the training set')
             decision = input(' Do you want to retake frames (y/n): ')
