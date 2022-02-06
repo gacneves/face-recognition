@@ -1,5 +1,4 @@
 import os, cv2
-from tkinter import N
 
 TRAINING_SET_DIR = './Training Set'
 
