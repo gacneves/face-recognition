@@ -4,11 +4,12 @@ import cv2, numpy
 
 import manage_training_set
 
-def readCSVFiles(images, labels):
+def readCSVFiles(images, labels, user_name):
     print('\n Reading training set...')
     for (_, _, files) in os.walk(manage_training_set.USER_CSV_DIR):
         for file in files:
             print(' Reading %s...' % file)
+            user_name.append(file.split(sep='.')[0])
             with open(os.path.join(manage_training_set.USER_CSV_DIR, file), newline='') as csvfile:
                 reader = csv.reader(csvfile)
                 for row in reader:
@@ -30,8 +31,8 @@ if decision == 'y':
 # Generate csv files for the training set users
 manage_training_set.generateCSVFile()
 
-images, labels = [], []
-readCSVFiles(images, labels)
+images, labels, user_name = [], [], []
+readCSVFiles(images, labels, user_name)
 
 # Converting lists to numpy.arrays
 (images, labels) = [numpy.array(lis) for lis in [images, labels]]
