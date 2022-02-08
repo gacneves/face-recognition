@@ -1,7 +1,10 @@
 import os
 import cv2
+import csv
 
 TRAINING_SET_DIR = './Training Set'
+USER_CSV_DIR = './User CSV'
+SEPARATOR = ';'
 CASCADE_CLASSIFIER_DIR = './Haar Cascade Classifier'
 OUTPUT_WIDTH = 100
 OUTPUT_HEIGHT = 100
@@ -66,9 +69,28 @@ def takeUserPhotos(user_path):
         cv2.imshow('Taking photos...', frame)
         cv2.waitKey(250)
         count += 1
-
+    print(' All photos taken. Destroying window')
     camera.release()
     cv2.destroyAllWindows()
+
+def generateCSVFile(username, user_path):
+    print('\n Creating .csv file for the new user added')
+    
+    print(' Checking User CSV folder existence...')
+    if not os.path.isdir(USER_CSV_DIR):
+        print(' Folder not found. Creating the directory')
+        os.mkdir(USER_CSV_DIR)
+    else:
+        print(' Found User CSV folder')
+
+    user_file = username + '.csv'
+    user_csv_path = os.path.join(USER_CSV_DIR, user_file)
+
+    f = open(user_csv_path, 'w')
+
+    for filename in os.listdir(user_path):
+        row = user_path + filename + SEPARATOR + username
+        f.write(row + '\n')
 
 def manageTrainingSet():
     print('\n ### Managing the training set ### ')
@@ -85,10 +107,12 @@ def manageTrainingSet():
                 decision = input(' Type a valid option. Do you want to retake the photos (y/n): ')
             if decision == 'y':
                 takeUserPhotos(user_path)
+                generateCSVFile(name, user_path)
         else:
             print('\n User does not exist in the database. Making directory...')
             os.mkdir(user_path)
             print(' Created ', name, ' folder in the training set\n')
             takeUserPhotos(user_path)
+            generateCSVFile(name, user_path)
             
         name = input('\n Type the name of the person that you want to add to the training set of the classifier (0 to finish): ')
