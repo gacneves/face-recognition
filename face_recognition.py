@@ -14,8 +14,8 @@ def readCSVFiles(images, labels):
                 for row in reader:
                     list = row[0].split(sep=';')
                     images.append(cv2.imread(list[0]))
-                    labels.append(int(list[1]))
-    print('\n Successfully read\ training set...')
+                    labels.append(list[1])
+    print('\n Successfully read training set...')
 
 # Initialize application
 print('\n### Face recognition: detecting known users ###')
@@ -29,10 +29,9 @@ if decision == 'y':
 
 manage_training_set.generateCSVFile()
 
-# Reading from .csv file
-# images, labels = [], []
-# readCSVFiles(images, labels)
+images, labels = [], []
+readCSVFiles(images, labels)
 
-# # Training EigenFaces model
-# model = cv2.face.LBPHFaceRecognizer_create()
-# model.train(images,labels)
+# Training EigenFaces model
+model = cv2.face.LBPHFaceRecognizer_create()
+model.train(images,labels)

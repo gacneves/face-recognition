@@ -91,7 +91,7 @@ def generateCSVFile():
         user_csv_path = os.path.join(USER_CSV_DIR, user_file)
         f = open(user_csv_path, 'w')
         for file in os.listdir(user_training_path):
-            row = user_training_path + file + SEPARATOR + str(user_id)
+            row = os.path.join(user_training_path, file)+ SEPARATOR + str(user_id)
             f.write(row + '\n')
         user_id += 1
 
