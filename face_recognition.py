@@ -1,4 +1,3 @@
-from cProfile import label
 import csv
 import os
 
@@ -15,8 +14,9 @@ def readCSVFiles(images, labels):
                     list = row[0].split(sep=';')
                     images.append(list[0])
                     labels.append(list[1])
-    print('\n Successfully read training set...')
+    print('\n Successfully read\ training set...')
 
+# Initialize application
 print('\n### Face recognition: detecting known users ###')
 
 # Managing training set
@@ -29,3 +29,5 @@ if decision == 'y':
 # Reading from .csv file
 images, labels = [], []
 readCSVFiles(images, labels)
+
+# Training EigenFaces model
