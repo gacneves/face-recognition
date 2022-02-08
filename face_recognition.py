@@ -32,6 +32,8 @@ manage_training_set.generateCSVFile()
 images, labels = [], []
 readCSVFiles(images, labels)
 
+(images, labels) = [numpy.array(lis, dtype="object") for lis in [images, labels]]
+
 # Training EigenFaces model
-model = cv2.face.LBPHFaceRecognizer_create()
-model.train(images,labels)
+# model = cv2.face.LBPHFaceRecognizer_create()
+# model.train(images,labels)

@@ -65,6 +65,7 @@ def takeUserPhotos(user_path):
             x, y, w, h = face
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255,0,0), 2)
             face_image = gray_frame[y:y+h, x:x+w]
+            cv2.resize(face_image, (OUTPUT_WIDTH, OUTPUT_HEIGHT), face_image)
             cv2.imwrite('%s/%s.jpg' % (user_path, count), face_image)
         cv2.imshow('Taking photos...', frame)
         cv2.waitKey(250)
@@ -87,7 +88,7 @@ def generateCSVFile():
     for dir in os.listdir(TRAINING_SET_DIR):
         user_training_path = os.path.join(TRAINING_SET_DIR, dir)
         user_file = dir + '.csv'
-        print(' Reading %s...' % user_file)
+        print(' Generating %s...' % user_file)
         user_csv_path = os.path.join(USER_CSV_DIR, user_file)
         f = open(user_csv_path, 'w')
         for file in os.listdir(user_training_path):
