@@ -3,8 +3,8 @@ import cv2
 
 TRAINING_SET_DIR = './Training Set'
 CASCADE_CLASSIFIER_DIR = './Haar Cascade Classifier'
-WIDTH = 300
-HEIGHT = 300
+OUTPUT_WIDTH = 100
+OUTPUT_HEIGHT = 100
 
 def checkTrainingSetDir():
     print('\n Checking Training Set folder existence...')
@@ -61,7 +61,8 @@ def takeUserPhotos(user_path):
         for face in faces:
             x, y, w, h = face
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255,0,0), 2)
-        cv2.imwrite('%s/%s.bmp' % (user_path, count), gray_frame)
+            face_image = gray_frame[y:y+h, x:x+w]
+            cv2.imwrite('%s/%s.jpg' % (user_path, count), face_image)
         cv2.imshow('Taking photos...', frame)
         cv2.waitKey(250)
         count += 1
