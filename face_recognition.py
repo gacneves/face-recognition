@@ -85,4 +85,4 @@ while True:
         else:
             cv2.putText(frame, 'User: Unknown', text_start_point, cv2.FONT_HERSHEY_PLAIN, 1, (255,0,0))
     cv2.imshow('Face Recognition...', frame)
-    cv2.waitKey(250)
+    cv2.waitKey(100)

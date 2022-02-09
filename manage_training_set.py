@@ -44,7 +44,7 @@ def takeUserPhotos(user_path):
     face_cascade = cv2.CascadeClassifier(cascade_face_file)
 
     # Count before the photos caption
-    print('\n A ammount of 100 photos will be taken in x seconds. Stay steady')
+    print('\n A ammount of 100 photos will be taken in 10 seconds. Stay steady')
     count = 5
     while count != 0:
         print(' Prepare to take photos in %d...' % count)
@@ -68,7 +68,7 @@ def takeUserPhotos(user_path):
             face_image = cv2.resize(face_image, (OUTPUT_WIDTH, OUTPUT_HEIGHT))
             cv2.imwrite('%s.jpg' % os.path.join(user_path, str(count)), face_image)
         cv2.imshow('Taking photos...', frame)
-        cv2.waitKey(250)
+        cv2.waitKey(100)
         count += 1
     print(' All photos taken. Destroying window')
     camera.release()
