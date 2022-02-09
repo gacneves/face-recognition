@@ -1,5 +1,6 @@
 import csv
 import os
+import platform
 import cv2, numpy
 
 import manage_training_set
@@ -55,7 +56,10 @@ face_cascade = cv2.CascadeClassifier(cascade_face_file)
 
 # Open camera
 print('\n Trying to open camera')
-camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+if platform.system() == 'Windows':
+    camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+else:
+    camera = cv2.VideoCapture(0)
 if not camera.isOpened():
     print('\n Error: Could not open the camera')
     exit()

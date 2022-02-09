@@ -1,5 +1,6 @@
 import os
 import cv2
+import platform
 
 TRAINING_SET_DIR = 'Training Set'
 USER_CSV_DIR = 'User CSV'
@@ -32,7 +33,11 @@ def checkTrainingSetDir():
 def takeUserPhotos(user_path):
     # Try opening camera
     print('\n Checking camera existence...')
-    camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    if platform.system() == 'Windows':
+        camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    else:
+        camera = cv2.VideoCapture(0)
+
     if not camera.isOpened():
         print('\n Error: Could not open the camera')
         exit()
