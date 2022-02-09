@@ -16,7 +16,7 @@ def readCSVFiles(images, labels, user_name):
                     list = row[0].split(sep=';')
                     images.append(cv2.imread(list[0], 0))
                     labels.append(int(list[1]))
-    print('\n Successfully read training set...')
+    print(' Successfully read training set...')
 
 # Initialize application
 print('\n### Face recognition: detecting known users ###')
@@ -38,8 +38,11 @@ readCSVFiles(images, labels, user_name)
 (images, labels) = [numpy.array(lis) for lis in [images, labels]]
 
 # Training FisherFace model
+print('\n Creating model to be trained...')
 model = cv2.face.FisherFaceRecognizer_create()
+print(' Training model...')
 model.train(images,labels)
+print(' Successfully trained model')
 model.setThreshold(1000)
 
 # Open Haar cascade classifier for identifying face
@@ -47,18 +50,21 @@ cascade_face_file = os.path.join(manage_training_set.CASCADE_CLASSIFIER_DIR, 'ha
 face_cascade = cv2.CascadeClassifier(cascade_face_file)
 
 # Open camera
+print('\n Trying to open camera')
 camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 if not camera.isOpened():
     print('\n Error: Could not open the camera')
     exit()
 print(' Successfully opened the camera')
 
+print('\n Detect faces and predict users (Ctrl+C to stop)')
 while True:
     # Take camera frame
     _, frame = camera.read()
 
     # Convert RGB color channels to gray
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
     # Detect face in the frame
     faces = face_cascade.detectMultiScale(gray_frame)
     for face in faces:
@@ -66,6 +72,13 @@ while True:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255,0,0), 2)
         face_image = gray_frame[y:y+h, x:x+w]
         face_image = cv2.resize(face_image, (manage_training_set.OUTPUT_WIDTH, manage_training_set.OUTPUT_HEIGHT))
+
         # Try recognizing the face
         prediction = model.predict(face_image)
-        
+        text_start_point = (x - 10, y -10)
+        if(prediction[0] >= 0):
+            cv2.putText(frame, 'User: ' + user_name[prediction[0]], text_start_point, cv2.FONT_HERSHEY_PLAIN, 1, (255,0,0))
+        else:
+            cv2.putText(frame, 'User: Unknown', text_start_point, cv2.FONT_HERSHEY_PLAIN, 1, (255,0,0))
+    cv2.imshow('Face Recognition...', frame)
+    cv2.waitKey(250)
