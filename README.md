@@ -23,3 +23,5 @@ When it starting, the face recognizer will ask if you want to manage the trainin
 In the face recognition module, just wait for the model to be trained, reading the csv files that will be created containing the photos of the database. After that it will starting classifying the person in front of the camera.
 
 Note: if you have more than one camera in your computer, consider changing the index in the VideoCamera function.
+
+Sources: https://docs.opencv.org/3.4/da/d60/tutorial_face_main.html
