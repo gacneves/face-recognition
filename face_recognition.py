@@ -34,13 +34,17 @@ manage_training_set.generateCSVFile()
 images, labels, user_name = [], [], []
 readCSVFiles(images, labels, user_name)
 
+if len(user_name) == 1:
+    print(' \nTraining set must have at least 2 users. Exitting application')
+    exit()
+
 # Converting lists to numpy.arrays
 (images, labels) = [numpy.array(lis) for lis in [images, labels]]
 
 # Training FisherFace model
 print('\n Creating model to be trained...')
 model = cv2.face.FisherFaceRecognizer_create()
-print(' Training model...')
+print(' Training model with %s users...' % len(user_name))
 model.train(images,labels)
 print(' Successfully trained model')
 model.setThreshold(1000)
