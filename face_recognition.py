@@ -36,7 +36,7 @@ images, labels, user_name = [], [], []
 readCSVFiles(images, labels, user_name)
 
 if len(user_name) == 1:
-    print(' \nTraining set must have at least 2 users. Exitting application')
+    print('\n Training set must have at least 2 users. Exitting application')
     exit()
 
 # Converting lists to numpy.arrays
