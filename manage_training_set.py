@@ -1,6 +1,5 @@
 import os
 import cv2
-import csv
 
 TRAINING_SET_DIR = 'Training Set'
 USER_CSV_DIR = 'User CSV'
