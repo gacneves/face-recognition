@@ -77,7 +77,7 @@ while True:
     faces = face_cascade.detectMultiScale(gray_frame)
     for face in faces:
         x, y, w, h = face
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (255,0,0), 2)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (237,0,217), 2)
         face_image = gray_frame[y:y+h, x:x+w]
         face_image = cv2.resize(face_image, (manage_training_set.OUTPUT_WIDTH, manage_training_set.OUTPUT_HEIGHT))
 
@@ -85,8 +85,8 @@ while True:
         prediction = model.predict(face_image)
         text_start_point = (x - 10, y -10)
         if(prediction[0] >= 0):
-            cv2.putText(frame, 'User: ' + user_name[prediction[0]], text_start_point, cv2.FONT_HERSHEY_PLAIN, 1, (255,0,0))
+            cv2.putText(frame, 'User: ' + user_name[prediction[0]], text_start_point, cv2.FONT_HERSHEY_PLAIN, 1, (237,0,217))
         else:
-            cv2.putText(frame, 'User: Unknown', text_start_point, cv2.FONT_HERSHEY_PLAIN, 1, (255,0,0))
+            cv2.putText(frame, 'User: Unknown', text_start_point, cv2.FONT_HERSHEY_PLAIN, 1, (237,0,217))
     cv2.imshow('Face Recognition...', frame)
     cv2.waitKey(100)
