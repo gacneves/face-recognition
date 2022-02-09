@@ -66,7 +66,7 @@ def takeUserPhotos(user_path):
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255,0,0), 2)
             face_image = gray_frame[y:y+h, x:x+w]
             face_image = cv2.resize(face_image, (OUTPUT_WIDTH, OUTPUT_HEIGHT))
-            cv2.imwrite('%s.jpg' % os.path.join(user_path, count), face_image)
+            cv2.imwrite('%s.jpg' % os.path.join(user_path, str(count)), face_image)
         cv2.imshow('Taking photos...', frame)
         cv2.waitKey(250)
         count += 1
