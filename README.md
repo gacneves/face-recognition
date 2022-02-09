@@ -1,4 +1,4 @@
-# Face recognition for information security using OpenCV
+# Face recognition for information security using Python OpenCV
 
 Recognizing faces from a dataset made by the user with the project members already on it training a FisherFace model. The application identify if the person is on the training set or is unknown.
 
