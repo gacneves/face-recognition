@@ -24,6 +24,8 @@ In the face recognition module, just wait for the model to be trained, reading t
 
 Note: if you have more than one camera in your computer, consider changing the index in the VideoCamera function.
 
-Sources: https://docs.opencv.org/3.4/da/d60/tutorial_face_main.html
+Sources:
 
-         http://www.scholarpedia.org/article/Fisherfaces
+https://docs.opencv.org/3.4/da/d60/tutorial_face_main.html
+
+http://www.scholarpedia.org/article/Fisherfaces
